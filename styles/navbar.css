@@ -1,0 +1,19 @@
+.navbar-custom {
+  background: #ed7014;
+  padding: 16px;
+  border-radius: 20px 20px 0px 0px;
+  z-index: 2;
+  position: fixed;
+}
+
+.nav-text {
+    color: #fff;
+}
+
+.nav-text:hover {
+    color: #000;
+}
+
+.active{
+    font: bold;
+}

@@ -1,0 +1,14 @@
+.height {
+  height: 80vh;
+}
+
+.main-title {
+  font-family: "Poppins", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 128px;
+  line-height: 192px;
+  color: #ffffff;
+}
+
+
