@@ -10,8 +10,20 @@
     padding-left: 16px;
 }
 
+.card-list{
+    width: 50rem;
+}
+
+.pointer{
+    cursor: pointer;
+}
+
+.text-small{
+    font-size: 14px;
+}
+
 /* Small devices (landscape phones, 576px and up) */
-@media (min-width: 576px) { 
+@media (min-width: 576px) {
     .container-fluid {
         padding-right: 40px;
         padding-left: 40px;
@@ -19,14 +31,14 @@
  }
 
 /* Large devices (desktops, 992px and up) */
-@media (min-width: 992px) { 
+@media (min-width: 992px) {
     .container-fluid {
     padding-right: 70px;
     padding-left: 70px;
 } }
 
 /* X-Large devices (large desktops, 1200px and up) */
-@media (min-width: 1200px) { 
+@media (min-width: 1200px) {
     .container-fluid {
         padding-right: 100px;
         padding-left: 100px;
@@ -181,7 +193,7 @@
 }
 
 .mt-20{
-    margin-top: 1.25rem; 
+    margin-top: 1.25rem;
 }
 
 .mt-25{
@@ -320,11 +332,11 @@
 
 
 /* Small devices (landscape phones, 576px and up) */
-@media (min-width: 576px) { 
-   
+@media (min-width: 576px) {
+
  }
 /* Medium devices (landscape phones, 768px and up) */
-@media (min-width: 768px) { 
+@media (min-width: 768px) {
    /* Padding */
 .pe-md-25{
     padding-right: 1.563rem;
@@ -393,7 +405,7 @@
  }
 
 /* Large devices (desktops, 992px and up) */
-@media (min-width: 992px) { 
+@media (min-width: 992px) {
     /* Padding */
     .pt-lg-100{
         padding-top: 6.25rem;
@@ -410,7 +422,7 @@
     .pb-lg-227{
         padding-bottom: 14.188rem;
     }
-    
+
     .pe-lg-60{
         padding-right: 3.75rem;
     }
@@ -422,7 +434,7 @@
     .pt-lg-60{
         padding-top: 3.75rem;
     }
-   
+
     .pt-lg-145{
         padding-top: 9.063rem;
     }
@@ -453,7 +465,7 @@
     .me-lg-35{
         margin-right: 2.2rem;
     }
-    
+
     .ms-lg-35{
         margin-left: 2.2rem;
     }
@@ -461,7 +473,7 @@
     .me-lg-20{
         margin-right: 1.25rem;
     }
-    
+
     .ms-lg-40{
         margin-left: 2.5rem;
     }
@@ -471,7 +483,7 @@
 
 
 /* X-Large devices (large desktops, 1200px and up) */
-@media (min-width: 1200px) { 
+@media (min-width: 1200px) {
     .container-fluid {
         padding-right: 100px;
         padding-left: 100px;

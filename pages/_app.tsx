@@ -1,6 +1,7 @@
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import '../styles/navbar.css'
+import '../styles/navbar2.css'
 import '../styles/globals.css'
 import '../styles/search.css'
 import '../styles/utilities.css'

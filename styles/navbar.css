@@ -1,19 +1,42 @@
-.navbar-custom {
-  background: #ed7014;
-  padding: 16px;
-  border-radius: 20px 20px 0px 0px;
-  z-index: 2;
-  position: fixed;
+.searchbar {
+  position: relative;
 }
 
-.nav-text {
-    color: #fff;
+.searchbar input {
+  height: 50px;
+  text-indent: 25px;
+  background-color: #f2f2f2;
+
 }
 
-.nav-text:hover {
-    color: #000;
+.searchbar input:focus {
+  box-shadow: none;
+  border: 2px solid #ed7014;
+  background-color: #f2f2f2;
+
 }
 
-.active{
-    font: bold;
+.searchbar .fa-search {
+  position: absolute;
+  top: 20px;
+  left: 16px;
+}
+
+.searchbar button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  height: 40px;
+  width: 110px;
+  border: transparent;
+  background: #f2f2f2
+}
+
+.navbar-main{
+    background: white;
+}
+
+.logo{
+    font-weight: bold;
+    color: #ed7014
 }

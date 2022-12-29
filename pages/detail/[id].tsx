@@ -1,55 +1,89 @@
-import { Spinner } from '@chakra-ui/react'
-import styled from '@emotion/styled'
-import { useRouter } from 'next/router'
-import MainLayout from 'src/components/layout/MainLayout'
-import useSupplierDetail from 'src/utils/api/supplier/useSupplierDetail'
+import { Router, useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import slugify from "slugify";
+import CardDetail from "../../components/organism/CardDetail";
+import Navbar from "../../components/organism/Navbar";
+import { SupplierTypes } from "../../services/data-types";
+import { getDetailSupplier } from "../../services/supplier/getDetailSupplier";
+import { getSuppliers } from "../../services/supplier/getSuppliers";
 
-const SupplierDetail = () => {
-  const router = useRouter()
-  const { supplier } = useSupplierDetail(router.query.id as string)
-  const { name, city, address, phoneNumber, category } = supplier || {}
+interface DetailProps {
+  data: SupplierTypes;
+}
+export default function Detail({ data }: DetailProps) {
+  const [query, setQuery] = useState("");
+  const router = useRouter();
+  // const [isRefreshing, setIsRefreshing] = useState(false);
+
+  // const refreshData = () => {
+  //   router.replace(router.asPath);
+  //   setIsRefreshing(true);
+  // };
+  // useEffect(() => {
+  //   setIsRefreshing(false);
+  // }, []);
+
+  const onClickSearch = () => {
+    router.push({
+      pathname: "/search",
+      query: {
+        q: query,
+      },
+    });
+  };
   return (
-    <MainLayout>
-      <Container>
-        {
-          supplier ?
-          <>
-            <h1>Detail Supplier</h1>
-            <h3><b>Name:</b> {name}</h3>
-            <p><b>City:</b> {city}</p>
-            <p><b>Address:</b> {address}</p>
-            <p><b>Phone:</b> {phoneNumber}</p>
-            <p>
-              <b>category:</b>
-
+    <>
+      <Navbar onClickSearch={onClickSearch} query={query} setQuery={setQuery} />
+      <section className="detail pt-lg-60 pb-50">
+        <div className="container-xxl container-fluid">
+          {/* <div className="detail-header pb-50">
+            <h2 className="text-4xl fw-bold color-palette-1 text-start mb-10">
+              Top Up
+            </h2>
+            <p className="text-lg color-palette-1 mb-0">
+              Perkuat akun dan jadilah pemenang
             </p>
-            {
-              category?.map(({ name }) => {
-                return name
-              }).join(';')
-            }
-          </> :
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <Spinner />
+          </div> */}
+          <div className="row">
+            <CardDetail data={data} />
           </div>
-        }
-
-      </Container>
-    </MainLayout>
-  )
+        </div>
+      </section>
+    </>
+  );
 }
 
-export default SupplierDetail
+// export async function getStaticPaths() {
+//   console.log("mulai");
+//   const response = await getSuppliers();
+//   //creating an array of objects
+//   console.log("berhenti");
+//   const paths = response.map((item: SupplierTypes) => ({
+//     params: { id: item.id },
+//     // params: { name: slugify(item.name,{lower: true}) },
+//   }));
 
-const Container = styled.div`
-  background: #FFFFFF;
-  border-radius: 25px;
-  margin: 8px 0;
-  padding: 16px;
-  width: 50vw;
+//   console.log(paths);
 
-  h1 {
-    font-weight: bold;
-    font-size: 40px;
-  }
-`
+//   return {
+//     paths: paths,
+//     fallback: false,
+//   };
+// }
+
+interface GetServerSideProps {
+  params: {
+    id: string;
+  };
+}
+
+export async function getServerSideProps({ params }: GetServerSideProps) {
+  const { id } = params;
+  const data = await getDetailSupplier(id);
+  console.log(data);
+  return {
+    props: {
+      data: data.data,
+    },
+  };
+}

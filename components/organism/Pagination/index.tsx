@@ -11,79 +11,148 @@ interface PaginationProps {
 }
 
 export default function Searchbar(props: PaginationProps) {
-  const { currentPage, setCurrentPage, totalPage, query } = props;
+  const { currentPage, totalPage, query, setCurrentPage } = props;
   const router = useRouter();
 
   const classPrev = cx({
-    "nav-link": true,
-    "nav-text": true,
-    disabled: currentPage === 1,
+    "page-item": true,
+    disabled: currentPage <= 0,
   });
 
   const classNext = cx({
-    "nav-link": true,
-    "nav-text": true,
-    disabled: currentPage === totalPage,
+    "page-item": true,
+    disabled: currentPage >= totalPage-1,
   });
 
-  let startPage = currentPage - 2;
-  let endPage = currentPage + 2;
+  const classMax = cx({
+    "page-item": true,
+    "visually-hidden": currentPage >= totalPage-6 ,
+  });
+  const classMin = cx({
+    "page-item": true,
+    "visually-hidden": currentPage <= 6 ,
+  });
 
-  if (currentPage || 0 < 1) {
-    startPage = 1;
-    endPage = 5;
-    setCurrentPage(1);
-  } else if (startPage < 1) {
-    startPage = 1;
-    endPage = 5;
+  let pages = [];
+
+  if (totalPage <= 6) {
+    // Jika jumlah halaman total kurang dari atau sama dengan 5, tampilkan semua pagination
+    pages = Array.from({ length: totalPage }, (_, i) => i + 1);
+  }  else if (currentPage + 6 >= totalPage) {
+    // Jika currentPage berada dekat akhir dari endPage, tampilkan currentPage - 1 sampai currentPage + 3
+    pages = Array.from({ length: 7 }, (_, i) => totalPage-6 + i);
+  } else if (currentPage < 6){
+    pages = Array.from({ length: 7 }, (_, i) =>  1 + i);
+  }else {
+    // Tampilkan pagination seperti biasa
+    pages = Array.from({ length: 5 }, (_, i) => currentPage-1 + i);
   }
 
-  if (endPage > totalPage) {
-    endPage = totalPage;
-    startPage = totalPage - 4;
-  }
+  const onClickPrev = () => {
+    setCurrentPage(currentPage - 1);
+    const url = {
+      pathname: "/search",
+      query: {
+        q: query,
+        page: currentPage-1,
+      },
+    };
+    router.push(url, url, { shallow: true });
+  };
+  const onClickMin = () => {
+    setCurrentPage(0);
+    const url = {
+      pathname: "/search",
+      query: {
+        q: query,
+        page: 0
+      },
+    };
+    router.push(url, url, { shallow: true });
+  };
+  const onClickMax = () => {
+    setCurrentPage(totalPage - 1);
+    const url = {
+      pathname: "/search",
+      query: {
+        q: query,
+        page: totalPage-1
+      },
+    };
+    router.push(url, url, { shallow: true });
+  };
+  const onClickNext = () => {
+    setCurrentPage(currentPage + 1);
+    const url = {
+      pathname: "/search",
+      query: {
+        q: query,
+        page: currentPage + 1
+      },
+    };
+    router.push(url, url, { shallow: true });
+  };
 
   return (
     <>
       <nav aria-label="...">
         <ul className="pagination justify-content-end">
-          <li className="page-link">
-            <Link legacyBehavior
-              href="/search"
-              as={`/search?q=${query}&page=${currentPage - 1}`}
-            >
-              <a className={classPrev}>Previous</a>
-            </Link>
+          <li className={classPrev}>
+            <button className="page-link" onClick={onClickPrev}>
+              Previous
+            </button>
           </li>
 
-          {Array.from(
-            { length: endPage - startPage + 1 },
-            (_, i) => startPage + i
-          )
-            .slice(0, 5)
-            .map((page) => (
-              <li className="page-item">
-                <Link legacyBehavior href="/search" as={`/search?q=${query}&page=${page}`}>
-                  <a
-                    key={page}
-                    className={cx({
-                      "page-link": true,
-                      disabled: page === currentPage,
-                    })}
-                  >
-                    {page}
-                  </a>
-                </Link>
+          <li className={classMin}>
+            <button className="page-link" onClick={onClickMin}>
+              1
+            </button>
+          </li>
+          <li className={classMin}>
+            <button className="page-link disabled">
+              ...
+            </button>
+          </li>
+          {pages.map((page) => (
+            <>
+              <li
+                className={cx({
+                  "page-item": true,
+                  disabled: page === currentPage+1,
+                })}
+              >
+                <button
+                  onClick={() => {
+                    setCurrentPage(page-1);
+                    router.push({
+                      pathname: "/search",
+                      query: {
+                        q: query,
+                        page: page-1,
+                      },
+                    });
+                  }}
+                  className="page-link"
+                >
+                  {page}
+                </button>
               </li>
-            ))}
-
-          <li className="page-link">
-            <Link legacyBehavior
-              href="/search"
-              as={`/search?q=${query}&page=${currentPage + 1}`}
-            >
-              <a className={classNext}>Next</a>
-            </Link>
+            </>
+          ))}
+          <li className={classMax}>
+            <button className="page-link disabled">
+              ...
+            </button>
+          </li>
+          <li className={classMax}>
+            <button className="page-link" onClick={onClickMax}>
+              {totalPage}
+            </button>
+          </li>
+          <li className={classNext}>
+            <button className="page-link" onClick={onClickNext}>
+              Next
+            </button>
           </li>
         </ul>
       </nav>
