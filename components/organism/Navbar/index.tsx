@@ -17,7 +17,7 @@ export default function Navbar(props: Navbarprops) {
     <nav className="navbar navbar-main navbar-expand-lg">
       <div className="container-fluid grid gap-4">
         <Link href="/" legacyBehavior>
-          <a className="navbar-brand m-3 logo">SUPERSOURCE</a>
+          <a className="navbar-brand m-3 logo">SUPRSOURCE</a>
         </Link>
         <div className="collapse navbar-collapse searchbar">
           <i className="fa fa-search"></i>
